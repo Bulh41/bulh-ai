@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Send a message and receive an AI response",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": [
+      "real AI chat generation",
+      "message rendering",
+      "conversation flow"
+    ],
+    "description": "Verifies a user can send a message and see the generated assistant reply.",
+    "steps": [
+      "Enter 'Explain photosynthesis in simple words' in the chat composer",
+      "Send the message",
+      "Wait for the assistant response"
+    ],
+    "expected": "The user's message and a non-empty AI-generated assistant reply appear in the conversation."
+  },
+  {
+    "name": "Show a contextual notice for cracking and cybersecurity topics",
+    "viewport": "desktop",
+    "covers": [
+      "context-aware cybersecurity disclaimer",
+      "educational cybersecurity response"
+    ],
+    "description": "Verifies cybersecurity and cracking discussions receive a brief permission-focused educational notice.",
+    "steps": [
+      "Enter 'Explain password cracking and how security professionals defend against it' in the chat composer",
+      "Send the message",
+      "Wait for the assistant response"
+    ],
+    "expected": "The assistant response begins with the educational use notice and then provides safe, useful cybersecurity explanation."
+  },
+  {
+    "name": "Continue a conversation and retain it after reload",
+    "viewport": "desktop",
+    "covers": [
+      "multi-turn AI context",
+      "local conversation history",
+      "conversation persistence"
+    ],
+    "description": "Verifies the assistant can use earlier messages and the conversation remains available after reload.",
+    "steps": [
+      "Send 'My name is Alex'",
+      "Send 'What name did I tell you?'",
+      "Refresh the page and reopen the conversation"
+    ],
+    "expected": "The assistant refers to Alex in its reply and the conversation remains visible after refresh."
+  },
+  {
+    "name": "Start a new chat and switch between saved conversations on mobile",
+    "viewport": "mobile",
+    "covers": [
+      "new conversation",
+      "conversation switching",
+      "mobile responsive navigation"
+    ],
+    "description": "Verifies mobile users can start a separate chat and return to an earlier conversation.",
+    "steps": [
+      "Send a message to create a conversation",
+      "Open the conversation menu and start a new chat",
+      "Open the previous conversation from the history list"
+    ],
+    "expected": "A separate empty chat is created and the previous conversation can be reopened with its messages intact."
+  },
+  {
+    "name": "Show a helpful error and allow retry when AI generation fails",
+    "viewport": "desktop",
+    "covers": [
+      "AI API failure handling",
+      "visible error state",
+      "retry after failure"
+    ],
+    "description": "Verifies a failed AI request is communicated clearly and the user can try again.",
+    "qa_faults": [
+      {
+        "method": "POST",
+        "path": "/api/chat",
+        "status": 500,
+        "body_json": {
+          "error": "simulated_failure"
+        }
+      }
+    ],
+    "steps": [
+      "Enter 'Give me three ideas for a weekend project'",
+      "Send the message while the chat endpoint returns an error",
+      "Use the retry action"
+    ],
+    "expected": "A visible error with a retry action appears; retrying after the fault is cleared can produce an assistant response."
+  }
+]
